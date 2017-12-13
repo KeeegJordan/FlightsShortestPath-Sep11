@@ -18,7 +18,7 @@ public class Program {
 	 * 
 	 * @param args unused
 	 */
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 	
 		Set<String> cities = new HashSet<String>();
@@ -29,12 +29,14 @@ public class Program {
 		
 		buildGraph(graph, cities, time);
 		
+		System.out.println("Enter Airport FAA code: '<from> <to>'");
+		System.out.println("for shortest path");
 		String twoCharacters = s.nextLine();
 		
 		while (!twoCharacters.equals("exit")) {
 			
-			String from = "JFK";
-			String to = twoCharacters;
+			String from = twoCharacters.split(" ")[0];
+			String to = twoCharacters.split(" ")[1];
 			
 			if (!graph.containsNode(from)) {
 				twoCharacters = s.nextLine();
@@ -47,15 +49,20 @@ public class Program {
 			}
 			
 			Path<String> path = findPath(graph, from, to);
-			if (path != null) {
-				System.out.println(path.start + "," + path.destination + "," + path.time());
+			if (path == null) {
+				System.out.println("no path found");
+			} else {
+				for (Edge<String, Integer> edge : path.edges()) {
+					System.out.println(edge.fromLabel() + " to " + 
+						edge.toLabel() + " time: " + edge.label());
+				}
 			}
 			twoCharacters = s.nextLine();
 		}
 		
 		s.close();
-	} 
-	
+	} 	
+			
 
 	private static void parseData(String filename, Set<String> cities, Map<String, Map<String, Integer>> time) {
 		BufferedReader br;
