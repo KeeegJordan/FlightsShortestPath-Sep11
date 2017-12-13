@@ -25,7 +25,7 @@ public class Program {
 		Map<String, Map<String, Integer>> time = new HashMap<String, Map<String, Integer>>();
 		Graph<String, Integer> graph = new Graph<>();
 		
-		parseData("src/results.csv", cities, time);
+		parseData("results.csv", cities, time);
 		
 		buildGraph(graph, cities, time);
 		
@@ -53,8 +53,7 @@ public class Program {
 				System.out.println("no path found");
 			} else {
 				for (Edge<String, Integer> edge : path.edges()) {
-					System.out.println(edge.fromLabel() + " to " + 
-						edge.toLabel() + " time: " + edge.label());
+					System.out.println(edge.fromLabel() + " to " + edge.toLabel() + " arrival: " + edge.label() / 10000 + "th at " + edge.label() % 10000); 
 				}
 			}
 			twoCharacters = s.nextLine();
